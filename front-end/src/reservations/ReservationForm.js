@@ -30,7 +30,7 @@ export const ReservationForm = ({
                         name="last_name"
                         type="text"
                         required={true}
-                        value={reservation.laSt_name}
+                        value={reservation.last_name}
                         maxLength="30"
                         onChange={changeHandler}
                         />
@@ -44,7 +44,7 @@ export const ReservationForm = ({
                         required={true}
                         value={reservation.mobile_number}
                         maxLength="20"
-                        onCHange={changeHandler}
+                        onChange={changeHandler}
                         />
                     </div>
                     <div>
