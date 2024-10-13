@@ -76,7 +76,7 @@ export const ReservationForm = ({
             />  
                     </div>
                     <div>
-                        <label htmlFor="people">Number of People:</label>
+                        <label htmlFor="people">Number in Party:</label>
                         <input 
                         id="people"
                         name="people"
@@ -89,12 +89,16 @@ export const ReservationForm = ({
                     </div>
                     <div className="group-row">
                         <button 
-                        className="red"
+                        className="btn btn-outline-danger btn-sm mr-1"
                         type="button"
                         onClick={() => history.goBack()}>
                             Cancel
                             </button>
-                        <button className="black" type="submit">
+                        <button 
+                        className="btn btn-outline-primary btn-sm"
+                        type="submit"
+                        onClick={(event) => submitHandler(event)}
+                        >
                             Submit
                         </button>
                     </div>
