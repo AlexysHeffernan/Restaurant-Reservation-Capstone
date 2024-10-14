@@ -12,6 +12,7 @@ import { today } from "../utils/date-time";
 import { previous, next } from "../utils/date-time";
 import { Link, useHistory } from "react-router-dom";
 import ListTables from "./ListTables";
+import moment from "moment";
 
 /**
  * Defines the dashboard page.
