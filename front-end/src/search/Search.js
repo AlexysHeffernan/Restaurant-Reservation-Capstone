@@ -1,85 +1,69 @@
 import React, { useState } from "react";
-import { listReservations, updateStatus } from "../utils/api";
-import ReservationsList from "../reservations/ReservationsList";
+import ErrorAlert from "../layout/ErrorAlert";
+import { searchByMobileNumber } from "../utils/api";
+import SearchForm from "./SearchForm";
+import ListReservations from "../dashboard/ListReservations";
 
-const Search = () => {
-  const [reservations, setReservations] = useState([]);
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const filterResults = false;
-
-  const changeHandler = (event) => {
-    setMobileNumber(event.target.value);
+function Search() {
+  //inital form
+  const initialFormState = {
+    mobile_number: " ",
   };
+
+  const [reservations, setReservations] = useState([]);
+  const [formData, setFormData] = useState({ ...initialFormState });
+  const [searchError, setSearchError] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
+
+
+
+  //change handlers
+
+  const changeHandler = ({ target }) => {
+    setFormData((currentFormData) => ({
+      ...currentFormData,
+      [target.name]: target.value,
+    }));
+  };
+
+  console.log("formData", formData);
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    const abortController = new AbortController();
-
-    let res = await listReservations(
-      { mobile_number: mobileNumber },
-      abortController.signal
-    );
-    await setReservations(res);
-    setSubmitted(true);
-
-    return () => abortController.abort();
-  };
-
-  const cancelHandler = async (event) => {
-    const abortController = new AbortController();
-
-    const result = window.confirm(
-      "Do you want to cancel this reservation? This cannot be undone."
-    );
-
-    if (result) {
-      await updateStatus(event.target.value, "cancelled");
-      let res = await listReservations(
-        { mobile_number: mobileNumber },
-        abortController.signal
-      );
-      await setReservations(res);
+    try {
+      const mobile_number = formData.mobile_number;
+      const foundReservations = await searchByMobileNumber(mobile_number);
+      setReservations(foundReservations);
       setSubmitted(true);
+    } catch (error) {
+      setSearchError(error);
     }
-
-    return () => abortController.abort();
   };
 
   return (
-    <section>
-      <h2>Search</h2>
+    <main>
       <div>
-        <form onSubmit={submitHandler}>
-          <div>
-            <label htmlFor="mobile_number">Mobile Number:</label>
-            <input
-              id="mobile_number"
-              name="mobile_number"
-              type="text"
-              required={true}
-              placeholder="Enter a customer's phone number"
-              value={mobileNumber}
-              maxLength="12"
-              onChange={changeHandler}
-            />
-          </div>
-          <button type="submit" className="black">
-            Find
-          </button>
-        </form>
+        <h1>Search by Mobile Number</h1>
       </div>
-      {submitted ? (
-        <ReservationsList
-          reservations={reservations}
-          filterResults={filterResults}
-          cancelHandler={cancelHandler}
+      <div>
+        <SearchForm
+          changeHandler={changeHandler}
+          submitHandler={submitHandler}
+          formData={formData}
         />
-      ) : (
-        ""
-      )}
-    </section>
+
+        {searchError.length > 0 && <ErrorAlert error={searchError} />}
+
+        {reservations.length > 0 && (
+          <ListReservations reservations={reservations} />
+        )}
+
+        {submitted &&
+          reservations.length <= 0 &&
+          `No reservations found for mobile number: ${formData.mobile_number}`}
+      </div>
+    </main>
   );
-};
+}
 
 export default Search;
