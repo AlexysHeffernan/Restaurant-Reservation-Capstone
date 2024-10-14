@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
+import { listReservations, listTables, finishTable, updateStatus } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { next, previous, today } from "../utils/date-time";
 import { useHistory } from "react-router-dom";
 import ReservationsList from "../reservations/ReservationsList";
-//import TablesList from "../tables/TablesList";
+import TablesList from "../tables/TablesList";
 import moment from "moment";
 
 /**
@@ -16,7 +16,7 @@ import moment from "moment";
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
-  //const [tables, setTables] = useState([]);
+  const [tables, setTables] = useState([]);
   const history = useHistory();
   const filterResults = true;
 
@@ -28,10 +28,34 @@ function Dashboard({ date }) {
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
+    listTables().then(setTables);
     return () => abortController.abort();
   }
 
- 
+  async function finishHandler(table_id) {
+    const abortController = new AbortController();
+    const result = window.confirm(
+      "Is this table ready to seat new guests? This cannot be undone."
+    );
+
+    if (result) {
+      await finishTable(table_id, abortController.signal);
+      loadDashboard();
+    }
+
+    return () => abortController.abort();
+  }
+
+  const cancelHandler = async (event) => {
+    const result = window.confirm(
+      "Do you want to cancel this reservation? This cannot be undone."
+    );
+
+    if (result) {
+      await updateStatus(event.target.value, "cancelled");
+      loadDashboard();
+    }
+  };
 
   return (
     <main>
@@ -44,7 +68,7 @@ function Dashboard({ date }) {
       <div className="item centered">
               <div className="group-row">
                 <button
-                  className="item black"
+                  className="btn btn-dark"
                   onClick={() =>
                     history.push(`/dashboard?date=${previous(date)}`)
                   }
@@ -52,13 +76,13 @@ function Dashboard({ date }) {
                   Previous
                 </button>
                 <button
-                  className="item black"
+                  className="btn btn-dark"
                   onClick={() => history.push(`/dashboard?date=${today()}`)}
                 >
                   Today
                 </button>
                 <button
-                  className="item black"
+                  className="btn btn-dark"
                   onClick={() => history.push(`/dashboard?date=${next(date)}`)}
                 >
                   Next
@@ -72,6 +96,11 @@ function Dashboard({ date }) {
               cancelHandler={cancelHandler}
             />
           </div>
+          <div id="tables" className="item">
+          <h2>Tables</h2>
+          <hr></hr>
+          <TablesList tables={tables} finishHandler={finishHandler} />
+        </div>
     </main>
   );
 }
