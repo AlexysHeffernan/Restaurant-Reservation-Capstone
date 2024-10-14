@@ -3,7 +3,7 @@ import { listReservations, listTables, finishTable, updateStatus } from "../util
 import ErrorAlert from "../layout/ErrorAlert";
 import { next, previous, today } from "../utils/date-time";
 import { useHistory } from "react-router-dom";
-import ReservationsList from "../reservations/ReservationsList";
+import ReservationsList from "../reservation/ReservationsList";
 import TablesList from "../tables/TablesList";
 import moment from "moment";
 
@@ -13,6 +13,7 @@ import moment from "moment";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
+
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
@@ -24,11 +25,14 @@ function Dashboard({ date }) {
 
   function loadDashboard() {
     const abortController = new AbortController();
+
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
+
     listTables().then(setTables);
+
     return () => abortController.abort();
   }
 
@@ -59,16 +63,19 @@ function Dashboard({ date }) {
 
   return (
     <main>
-      <h1>Dashboard</h1>
       <ErrorAlert error={reservationsError} />
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for {moment(date).format("dddd MMM DD YYYY")}</h4>
-      </div>
-    
-      <div className="item centered">
+      <div className="group">
+        <div className="item-double">
+          <div className="group">
+            <div className="item-double">
+              <h2>
+                Reservations for {moment(date).format("dddd MMM DD YYYY")}
+              </h2>
+            </div>
+            <div className="item centered">
               <div className="group-row">
                 <button
-                  className="btn btn-dark"
+                  className="item black"
                   onClick={() =>
                     history.push(`/dashboard?date=${previous(date)}`)
                   }
@@ -76,31 +83,35 @@ function Dashboard({ date }) {
                   Previous
                 </button>
                 <button
-                  className="btn btn-dark"
+                  className="item black"
                   onClick={() => history.push(`/dashboard?date=${today()}`)}
                 >
                   Today
                 </button>
                 <button
-                  className="btn btn-dark"
+                  className="item black"
                   onClick={() => history.push(`/dashboard?date=${next(date)}`)}
                 >
                   Next
                 </button>
               </div>
             </div>
-            <div id="reservations" className="group-col">
+          </div>
+          <hr></hr>
+          <div id="reservations" className="group-col">
             <ReservationsList
               reservations={reservations}
               filterResults={filterResults}
               cancelHandler={cancelHandler}
             />
           </div>
-          <div id="tables" className="item">
+        </div>
+        <div id="tables" className="item">
           <h2>Tables</h2>
           <hr></hr>
           <TablesList tables={tables} finishHandler={finishHandler} />
         </div>
+      </div>
     </main>
   );
 }

@@ -2,10 +2,10 @@ import React from "react";
 
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
-import ReservationNew from "../reservations/ReservationNew";
-import ReservationSeat from "../reservations/ReservationSeat";
-import ReservationEdit from "../reservations/ReservationEdit";
-//import TableNew from "../tables/TableNew";
+import ReservationNew from "../reservation/ReservationNew";
+import ReservationSeat from "../reservation/ReservationSeat";
+import ReservationEdit from "../reservation/ReservationEdit";
+import TableNew from "../tables/TableNew";
 import Search from "../search/Search";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
@@ -41,6 +41,9 @@ function Routes() {
       </Route>
       <Route path="/reservations/:reservation_id/edit">
         <ReservationEdit />
+      </Route>
+      <Route path="/tables/new">
+        <TableNew />
       </Route>
       <Route path="/search">
         <Search />
