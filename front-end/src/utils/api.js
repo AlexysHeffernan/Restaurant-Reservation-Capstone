@@ -82,8 +82,8 @@ export async function createReservation(reservation, signal){
     body: JSON.stringify({ data: reservation }),
     signal,
   };
-  let data = await fetchJson(url, options);
-  return data;
+  const response = await fetchJson(url, options, reservation);
+  return response;
 }
 
 export async function updateReservation(reservation_id, updatedRes, signal) {

@@ -31,13 +31,12 @@ function NewReservation() {
     event.preventDefault();
     const abortController = new AbortController();
     try {
-      const response = await createReservation(
-        formData,
-        abortController.signal
-      );
-      history.push(
-        `/dashboard/?date=${response.reservation_date.slice(0, 10)}`
-      );
+      const response = await createReservation(formData, abortController.signal);
+      if (response && response.data) {
+        history.push(`/dashboard/?date=${response.data.reservation_date.slice(0, 10)}`);
+      } else {
+        throw new Error("Invalid response structure");
+      }
     } catch (error) {
       setErrorAlert(error);
     }
