@@ -74,7 +74,7 @@ export async function readReservation(reservation_id, signal) {
 }
 
 export async function createReservation(reservation, signal){
-  const url = `${API_BASE_URL}/reservations/new`;
+  const url = `${API_BASE_URL}/reservations`;
   reservation.people = Number(reservation.people);
   const options = {
     method: "POST",
