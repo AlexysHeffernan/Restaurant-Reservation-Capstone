@@ -5,7 +5,7 @@ import { next, previous, today } from "../utils/date-time";
 import { useHistory } from "react-router-dom";
 import ReservationsList from "../reservations/ReservationsList";
 //import TablesList from "../tables/TablesList";
-//import moment from "moment";
+import moment from "moment";
 
 /**
  * Defines the dashboard page.
@@ -36,11 +36,42 @@ function Dashboard({ date }) {
   return (
     <main>
       <h1>Dashboard</h1>
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
-      </div>
       <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
+      <div className="d-md-flex mb-3">
+        <h4 className="mb-0">Reservations for {moment(date).format("dddd MMM DD YYYY")}</h4>
+      </div>
+    
+      <div className="item centered">
+              <div className="group-row">
+                <button
+                  className="item black"
+                  onClick={() =>
+                    history.push(`/dashboard?date=${previous(date)}`)
+                  }
+                >
+                  Previous
+                </button>
+                <button
+                  className="item black"
+                  onClick={() => history.push(`/dashboard?date=${today()}`)}
+                >
+                  Today
+                </button>
+                <button
+                  className="item black"
+                  onClick={() => history.push(`/dashboard?date=${next(date)}`)}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+            <div id="reservations" className="group-col">
+            <ReservationsList
+              reservations={reservations}
+              filterResults={filterResults}
+              cancelHandler={cancelHandler}
+            />
+          </div>
     </main>
   );
 }
