@@ -8,10 +8,10 @@ require('dotenv').config();
 const path = require("path");
 
 const {
-  DATABASE_URL = "postgresql://postgres@localhost/postgres",
-  DATABASE_URL_DEVELOPMENT = "postgresql://postgres@localhost/postgres",
-  DATABASE_URL_TEST = "postgresql://postgres@localhost/postgres",
-  DATABASE_URL_PREVIEW = "postgresql://postgres@localhost/postgres",
+  DATABASE_URL = "postgresql://restaurant_reservation_system_user:Oqw1tzztbhw57kqbQMkPM3SIbOTRSaRo@dpg-crs5d2jtq21c73dc7si0-a.oregon-postgres.render.com/restaurant_reservation_system?ssl=true",
+  DATABASE_URL_DEVELOPMENT = "postgresql://restaurant_reservation_system_user:Oqw1tzztbhw57kqbQMkPM3SIbOTRSaRo@dpg-crs5d2jtq21c73dc7si0-a.oregon-postgres.render.com/restaurant_reservation_system?ssl=true",
+  DATABASE_URL_TEST = "postgresql://restaurant_reservation_system_user:Oqw1tzztbhw57kqbQMkPM3SIbOTRSaRo@dpg-crs5d2jtq21c73dc7si0-a.oregon-postgres.render.com/restaurant_reservation_system?ssl=true",
+  DATABASE_URL_PREVIEW = "postgresql://restaurant_reservation_system_user:Oqw1tzztbhw57kqbQMkPM3SIbOTRSaRo@dpg-crs5d2jtq21c73dc7si0-a.oregon-postgres.render.com/restaurant_reservation_system?ssl=true",
   DEBUG,
 } = process.env;
 
