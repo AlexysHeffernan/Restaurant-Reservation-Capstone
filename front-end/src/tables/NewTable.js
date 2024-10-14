@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TableForm from "./TableForm";
+import TableForm from "./TablesList";
 import { createTable } from "../utils/api";
 import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
