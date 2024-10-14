@@ -27,6 +27,13 @@ function NewReservation() {
     }));
   };
 
+  const changeHandlerPeople = ({ target }) => {
+    setFormData((currentFormData) => ({
+      ...currentFormData,
+      [target.name]: Number(target.value),
+    }));
+  };
+
   const submitHandler = async (event) => {
     event.preventDefault();
     const abortController = new AbortController();
@@ -51,6 +58,7 @@ function NewReservation() {
         <ReservationForm
           formData={formData}
           changeHandler={changeHandler}
+          changeHandlerPeople={changeHandlerPeople}
           submitHandler={submitHandler}
         />
       </div>

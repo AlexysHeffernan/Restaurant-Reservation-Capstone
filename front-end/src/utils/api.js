@@ -75,15 +75,13 @@ export async function readReservation(reservation_id, signal) {
 
 export async function createReservation(reservation, signal){
   const url = `${API_BASE_URL}/reservations`;
-  reservation.people = Number(reservation.people);
   const options = {
     method: "POST",
     headers,
     body: JSON.stringify({ data: reservation }),
     signal,
   };
-  const response = await fetchJson(url, options, reservation);
-  return response;
+  return await fetchJson(url, options, reservation);
 }
 
 export async function updateReservation(reservation_id, updatedRes, signal) {

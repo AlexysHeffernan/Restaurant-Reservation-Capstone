@@ -1,7 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-function ReservationForm({ formData, changeHandler, submitHandler }) {
+function ReservationForm({ formData, 
+    changeHandler, 
+    submitHandler }) {
   const history = useHistory();
 
   return (
@@ -78,7 +80,7 @@ function ReservationForm({ formData, changeHandler, submitHandler }) {
             name="people"
             id="people"
             value={formData.people}
-            onChange={changeHandler}
+            onChange={changeHandlerPeople}
             required
           />
         </label>
