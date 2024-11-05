@@ -98,13 +98,13 @@ function Dashboard() {
 
   return (
     <main>
-      <h1>Dashboard</h1>
+      
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">
+        <h4 className="mb-0 mt-1">
           Reservations for {moment(date).format("dddd, MMM DD, YYYY")}
         </h4>
       </div>
-      <div className="container">
+      <div className="container" >
         <Link
           to={`/dashboard/?date=${previous(date)}`}
           className="btn btn-dark"
