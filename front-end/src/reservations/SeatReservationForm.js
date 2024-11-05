@@ -1,14 +1,15 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SeatReservationForm({ tables, submitHandler, changeHandler }) {
-  const history = useHistory();
+  const navigate = useNavigate();
+
   return (
     <div>
       <form>
-        <label>Select Table:</label>
+        <label>Select Table: </label>
         <select name="table_id" onChange={changeHandler}>
-          <option value="">Table Name - Capacity</option>
+          <option value="">Table Name - Capacity </option>
           {tables.map((table) => (
             <option
               key={table.table_id}
@@ -20,19 +21,19 @@ function SeatReservationForm({ tables, submitHandler, changeHandler }) {
           ))}
         </select>
         <div>
+        <button
+            className="btn btn-danger mr-2"
+            type="button"
+            onClick={() => navigate(-1)}
+          >
+            Cancel
+          </button>
           <button
             className="btn btn-primary"
             type="submit"
             onClick={(event) => submitHandler(event)}
           >
             Submit
-          </button>
-          <button
-            className="btn btn-secondary"
-            type="button"
-            onClick={() => history.goBack()}
-          >
-            Cancel
           </button>
         </div>
       </form>

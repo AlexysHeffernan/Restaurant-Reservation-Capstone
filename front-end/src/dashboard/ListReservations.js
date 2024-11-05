@@ -4,7 +4,8 @@ import { Link } from "react-router-dom"
 function ListReservations({ reservations, date, cancelHandler }) {
   const displayReservations = reservations.map((reservation, index) => {
     if (
-      reservation.status !== "finished" ||
+      reservation.reservation_date === date && 
+      reservation.status !== "finished" &&
       reservation.status !== "cancelled"
     ) {
       return (
@@ -25,20 +26,21 @@ function ListReservations({ reservations, date, cancelHandler }) {
             {reservation.status !== "booked" ? null : (
               <>
                 
-                <Link to={`/reservations/${reservation.reservation_id}/seat`} className="btn btn-outline-primary mx-1" >
+                <Link to={`/reservations/${reservation.reservation_id}/seat`} state={{ reservation }} className="btn btn-primary mx-1" >
                     Seat
                 </Link>
                 
 
-                <Link to ={`/reservations/${reservation.reservation_id}/edit`} className="btn btn-outline-primary mx-1" >
+                <Link to ={`/reservations/${reservation.reservation_id}/edit`} className="btn btn-secondary mx-1" >
                   Edit
                 </Link>
                 
                 <button
                   data-reservation-id-cancel={reservation.reservation_id}
-                  className="btn btn-danger"
+                  className="btn btn-danger mx-5 mt-2"
+                  state={{ reservation }}
                   type="button"
-                  onClick={() => cancelHandler(reservation)}
+                  onClick={() => cancelHandler(reservation.reservation_id)}
                 >
                   Cancel
                 </button>

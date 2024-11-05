@@ -1,8 +1,8 @@
 import React from "react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 function SearchForm({ changeHandler, formData, submitHandler }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -21,20 +21,20 @@ function SearchForm({ changeHandler, formData, submitHandler }) {
         </div>
         <br />
         <div>
+        <button
+            className="btn btn-danger mr-2"
+            type="button"
+            onClick={() => navigate(`/`)}
+          >
+            Cancel
+          </button>
           <button
             className="btn btn-primary"
             type="submit"
             onClick={(event) => submitHandler(event)}
           >
             Find
-          </button>
-          <button
-            className="btn btn-secondary"
-            type="button"
-            onClick={() => history.goBack()}
-          >
-            Cancel
-          </button>
+          </button> 
         </div>
       </form>
     </>

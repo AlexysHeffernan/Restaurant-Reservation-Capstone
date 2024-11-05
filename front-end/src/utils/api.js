@@ -6,7 +6,7 @@ import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "https://starter-restaurant-reservation-p4na.onrender.com";
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
@@ -69,38 +69,20 @@ export async function listReservations(params, signal) {
 }
 
 export async function readReservation(reservation_id, signal) {
-  const url = `${API_BASE_URL}/reservations/${reservation_id}`;
-  return await fetchJson(url, { headers, signal }, [])
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}`);
+  return await fetchJson(url, { headers, signal }, []);
 }
 
-export async function createReservation(reservation, signal){
+export async function createReservation(reservation, signal) {
   const url = `${API_BASE_URL}/reservations`;
+  reservation.people = Number(reservation.people);
   const options = {
     method: "POST",
     headers,
     body: JSON.stringify({ data: reservation }),
     signal,
   };
-  return await fetchJson(url, options, reservation);
-}
-
-export async function updateReservation(reservation_id, updatedRes, signal) {
-  const url = `${API_BASE_URL}/reservations/${reservation_id}/edit`;
-  updatedRes.people = Number(updatedRes.people);
-  const options = {
-    method: "PUT",
-    headers,
-    body: JSON.stringify({ data: updatedRes }),
-    signal,
-  };
-  const data = await fetchJson(url, options);
-  return data;
-}
-
-
-export async function listTables(signal) {
-  const url = `${API_BASE_URL}/tables`;
-  return await fetchJson(url, { headers, signal }, []);
+ return await fetchJson(url, options);
 }
 
 export async function createTable(table, signal) {
@@ -111,17 +93,25 @@ export async function createTable(table, signal) {
     body: JSON.stringify({ data: table }),
     signal,
   };
-  return await fetchJson(url, options, table);
+  let data = await fetchJson(url, options);
+  return data;
 }
 
-export async function updateTable(reservation_id, table_id) {
+export async function listTables(signal) {
+  const url = new URL(`${API_BASE_URL}/tables`);
+  return await fetchJson(url, { headers, signal }, []);
+}
+
+export async function updateTableForSeating(table_id, reservation_id, signal) {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const options = {
     method: "PUT",
-    body: JSON.stringify({ data: { reservation_id } }),
     headers,
+    body: JSON.stringify({ data: { reservation_id } }),
+    signal,
   };
-  return await fetchJson(url, options);
+  const data =  await fetchJson(url, options);
+  return data;
 }
 
 export async function finishTable(table_id, signal) {
@@ -153,14 +143,14 @@ export async function searchByMobileNumber(mobile_number, signal) {
     .then(formatReservationTime);
 }
 
-export async function updateTableForSeating(table_id, reservation_id, signal) {
-  const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+export async function updateReservation(reservation_id, data, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}/edit`;
   const options = {
     method: "PUT",
     headers,
-    body: JSON.stringify({ data: { reservation_id } }),
+    body: JSON.stringify({ data }),
     signal,
   };
-  const data =  await fetchJson(url, options);
-  return data;
+  return await fetchJson(url, options, {});
+  
 }

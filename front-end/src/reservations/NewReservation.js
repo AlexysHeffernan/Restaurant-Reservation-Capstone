@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import ReservationForm from "./ReservationForm";
 import { createReservation } from "../utils/api";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 
 function NewReservation() {
-  const history = useHistory();
+  const navigate = useNavigate();
+ 
 
   const initialFormState = {
     first_name: "",
@@ -27,26 +28,17 @@ function NewReservation() {
     }));
   };
 
-  const changeHandlerPeople = ({ target }) => {
-    setFormData((currentFormData) => ({
-      ...currentFormData,
-      [target.name]: Number(target.value),
-    }));
-  };
-
   const submitHandler = async (event) => {
     event.preventDefault();
     const abortController = new AbortController();
     try {
-      const response = await createReservation(formData, abortController.signal);
-      if (response && response.data) {
-        history.push(`/dashboard/?date=${response.data.reservation_date.slice(0, 10)}`);
-      } else {
-        throw new Error("Invalid response structure");
-      }
+      await createReservation(formData, abortController.signal)
+      navigate(`/dashboard`);
+
     } catch (error) {
       setErrorAlert(error);
     }
+    return () => abortController.abort();
   };
   return (
     <div>
@@ -54,13 +46,13 @@ function NewReservation() {
         <h1>New Reservation</h1>
       </div>
       <div>
-        <ErrorAlert error={errorAlert} />
+       
         <ReservationForm
           formData={formData}
           changeHandler={changeHandler}
-          changeHandlerPeople={changeHandlerPeople}
           submitHandler={submitHandler}
         />
+         <ErrorAlert error={errorAlert} />
       </div>
     </div>
   );

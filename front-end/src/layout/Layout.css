@@ -1,9 +1,15 @@
 body {
   font-family: "Lato", sans-serif;
-  background-color: #7ae0d8;
+  background-color: #fdfcfa;
 }
 
 .side-bar {
   background-color: #393a44;
   min-width: 200px;
+}
+
+th {
+ 
+
+  vertical-align: top;
 }

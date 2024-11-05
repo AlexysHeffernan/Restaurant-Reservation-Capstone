@@ -1,6 +1,5 @@
 import React from "react";
-
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 /**
  * Defines the menu for this application.
@@ -12,14 +11,14 @@ function Menu() {
   return (
     <nav className="navbar navbar-dark align-items-start p-0">
       <div className="container-fluid d-flex flex-column p-0">
-        <Link
+        <NavLink
           className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
           to="/"
         >
           <div className="sidebar-brand-text mx-3">
             <span>Periodic Tables</span>
           </div>
-        </Link>
+        </NavLink>
         <hr className="sidebar-divider my-0" />
         <ul className="nav navbar-nav text-light" id="accordionSidebar">
           <li className="nav-item">
@@ -35,10 +34,10 @@ function Menu() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/reservations/new">
+            <NavLink className="nav-link" to="/reservations/new">
               <span className="oi oi-plus" />
               &nbsp;New Reservation
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/tables/new">

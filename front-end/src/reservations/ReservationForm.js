@@ -1,12 +1,11 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function ReservationForm({ formData, 
     changeHandler, 
-    changeHandlerPeople,
     submitHandler }) {
-  const history = useHistory();
-
+      const navigate = useNavigate();
+    
   return (
     <div>
       <form>
@@ -81,20 +80,20 @@ function ReservationForm({ formData,
             name="people"
             id="people"
             value={formData.people}
-            onChange={changeHandlerPeople}
+            onChange={changeHandler}
             required
           />
         </label>
         <br />
         <button
-          className="btn btn-outline-danger btn-sm mr-1"
-          onClick={() => history.push("/")}
+          className="btn btn-danger btn-sm mr-2"
+          onClick={() => navigate(-1)}
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="btn btn-outline-primary btn-sm"
+          className="btn btn-primary btn-sm"
           onClick={(event) => submitHandler(event)}
         >
           Submit

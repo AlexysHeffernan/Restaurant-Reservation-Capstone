@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import TableForm from "./TableForm";
 import { createTable } from "../utils/api";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 
 function NewTable() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const initialFormState = {
     table_name: "",
@@ -34,7 +34,7 @@ function NewTable() {
     const abortController = new AbortController();
     try {
       await createTable(formData, abortController.signal);
-      history.push(`/dashboard`);
+      navigate(`/dashboard`);
     } catch (error) {
       setErrorAlert(error);
     }

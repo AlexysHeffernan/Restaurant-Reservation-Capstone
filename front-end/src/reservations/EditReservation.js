@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { readReservation, updateReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
@@ -17,7 +17,8 @@ function EditReservation() {
 
   const params = useParams();
   const reservation_id = params.reservation_id;
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [reservationError, setReservationError] = useState(null);
   const [formData, setFormData] = useState({ ...initialFormState });
@@ -35,8 +36,8 @@ function EditReservation() {
           first_name: data.first_name,
           last_name: data.last_name,
           mobile_number: data.mobile_number,
-          reservation_date: data.reservation_date.slice(0, 10),
-          reservation_time: data.reservation_time.slice(0, 5),
+          reservation_date: data.reservation_date,
+          reservation_time: data.reservation_time,
           people: data.people,
           status: data.status,
         })
@@ -65,8 +66,8 @@ function EditReservation() {
         formData,
         abortController.signal
       );
-      history.push(
-        `/dashboard/?date=${response.reservation_date.slice(0, 10)}`
+      navigate(
+        `/dashboard/?date=${response.reservation_date}`
       );
     } catch (error) {
       setErrorAlert(error);

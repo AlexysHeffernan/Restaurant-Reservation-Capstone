@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function TableForm({
   formData,
@@ -7,7 +7,7 @@ function TableForm({
   changeHandlerCapacity,
   submitHandler,
 }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -38,14 +38,14 @@ function TableForm({
         </label>
         <br />
         <button
-          className="btn btn-outline-danger btn-sm mr-1"
-          onClick={() => history.goBack()}
+          className="btn btn-danger btn-sm mr-2"
+          onClick={() => navigate(`/`)}
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="btn btn-outline-primary btn-sm"
+          className="btn btn-primary btn-sm"
           onClick={(event) => submitHandler(event)}
         >
           Submit

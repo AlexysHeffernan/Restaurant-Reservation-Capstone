@@ -1,5 +1,4 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
+import React, {Fragment} from "react";
 import Layout from "./layout/Layout";
 
 /**
@@ -8,11 +7,9 @@ import Layout from "./layout/Layout";
  */
 function App() {
   return (
-    <Switch>
-      <Route path="/">
-        <Layout />
-      </Route>
-    </Switch>
+    <Fragment>
+      <Layout />
+    </Fragment>
   );
 }
 

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import {
   listTables,
   readReservation,
   updateTableForSeating,
-  changeReservationStatus,
 } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import SeatReservationForm from "./SeatReservationForm";
@@ -12,13 +11,14 @@ import SeatReservationForm from "./SeatReservationForm";
 function SeatReservation() {
   const params = useParams();
   const reservation_id = params.reservation_id;
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [tables, setTables] = useState([]);
-  const [tablesError, setTablesError] = useState([]);
+  const [tablesError, setTablesError] = useState(null);
   const [formData, setFormData] = useState({});
-  const [reservation, setReservation] = useState({});
-  const [reservationError, setReservationError] = useState([]);
+  const [reservation, setReservation] = useState(location.state?.reservation || null);
+  const [reservationError, setReservationError] = useState(null);
 
   //Handlers
   const changeHandler = ({ target }) => {
@@ -27,18 +27,17 @@ function SeatReservation() {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    const abortController = new AbortController();
     try {
       const tableData = JSON.parse(formData);
-      const response = await updateTableForSeating(
-        tableData.table_id,
-        reservation_id
-      );
-      response.status = "Occupied";
-      await changeReservationStatus(reservation_id, "seated");
-      history.push("/dashboard");
+      console.log("People", reservation.people);
+      await updateTableForSeating(tableData.table_id, reservation_id);
+      navigate("/");
     } catch (error) {
-      setTablesError(error)
-    }
+      setTablesError(error);
+    } 
+    return () => abortController.abort();
+  
   };
 
   // load tables
@@ -52,23 +51,23 @@ function SeatReservation() {
   }
 
   //load reservation
-  useEffect(loadReservation, [reservation_id]);
+  useEffect(() => {
+    if (!reservation) {
+      const abortController = new AbortController();
+      setReservationError(null);
+      readReservation(reservation_id, abortController.signal)
+        .then((response) => setReservation(response.data))
+        .catch(setReservationError);
+      return () => abortController.abort();
+    }
+  }, [reservation, reservation_id]);
 
-  function loadReservation() {
-    const abortController = new AbortController();
-    setReservationError(null);
-    readReservation(reservation_id, abortController.signal)
-      .then(setReservation)
-      .catch(setReservationError);
-    return () => abortController.abort();
-  }
-
-  if (tables) {
+  if (tables && reservation) {
     return (
       <main>
         <h1>Seat Reservation</h1>
         <h3>
-          Reservation ID: {reservation_id} Party Size: {reservation.people}
+          Reservation ID: {reservation_id} Party Size: {reservation.people || "Loading..."}
         </h3>
         <div>
           <ErrorAlert error={tablesError} />

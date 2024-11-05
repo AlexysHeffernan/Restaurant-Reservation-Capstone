@@ -1,3 +1,5 @@
+import React from "react";
+
 function ListTables({ tables, finishHandler }) {
     const displayTables = tables.map((table, index) => {
       if (table.occupied || table.reservation_id) {
@@ -14,8 +16,8 @@ function ListTables({ tables, finishHandler }) {
               <button
                 data-table-id-finish={table.table_id}
                 className="btn btn-outline-primary"
-                type=""
-                onClick={() => finishHandler(table)}
+                type="button"
+                onClick={() => finishHandler(table.table_id, table.reservation_id)}
               >
                 Finish
               </button>
