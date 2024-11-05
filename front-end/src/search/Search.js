@@ -15,8 +15,6 @@ function Search() {
   const [searchError, setSearchError] = useState([]);
   const [submitted, setSubmitted] = useState(false);
 
-
-
   //change handlers
 
   const changeHandler = ({ target }) => {

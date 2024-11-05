@@ -1,22 +1,25 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
 import { changeReservationStatus } from "../utils/api";
 
-
 function ListSearchResults({ reservations }) {
- 
   const displayReservations = reservations.map((reservation, index) => {
     if (
       reservation.status !== "finished" &&
       reservation.status !== "cancelled"
     ) {
       const cancelHandler = () => {
-        if( window.confirm("Do you want to cancel this reservation?\n This cannot be undone.")){
-          changeReservationStatus(reservation.reservation_id, "cancelled")
-          .then((res)=> window.location.reload() )
-      }
-      }
-    
+        if (
+          window.confirm(
+            "Do you want to cancel this reservation?\n This cannot be undone."
+          )
+        ) {
+          changeReservationStatus(reservation.reservation_id, "cancelled").then(
+            (res) => window.location.reload()
+          );
+        }
+      };
+
       return (
         <tr key={index} className="res-text table-row">
           <td>{reservation.reservation_id}</td>
@@ -34,16 +37,21 @@ function ListSearchResults({ reservations }) {
           <td>
             {reservation.status !== "booked" ? null : (
               <>
-                
-                <Link to={`/reservations/${reservation.reservation_id}/seat`} state={{ reservation }} className="btn btn-primary mx-1" >
-                    Seat
+                <Link
+                  to={`/reservations/${reservation.reservation_id}/seat`}
+                  state={{ reservation }}
+                  className="btn btn-primary mx-1"
+                >
+                  Seat
                 </Link>
-                
 
-                <Link to ={`/reservations/${reservation.reservation_id}/edit`} className="btn btn-secondary mx-1" >
+                <Link
+                  to={`/reservations/${reservation.reservation_id}/edit`}
+                  className="btn btn-secondary mx-1"
+                >
                   Edit
                 </Link>
-                
+
                 <button
                   data-reservation-id-cancel={reservation.reservation_id}
                   className="btn btn-danger mx-5 mt-2"
@@ -58,7 +66,7 @@ function ListSearchResults({ reservations }) {
           </td>
         </tr>
       );
-    } 
+    }
     return null;
   });
 

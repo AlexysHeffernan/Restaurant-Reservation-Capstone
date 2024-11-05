@@ -1,17 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function ReservationForm({ formData, 
-    changeHandler, 
-    submitHandler }) {
-      const navigate = useNavigate();
-    
+function ReservationForm({ formData, changeHandler, submitHandler }) {
+  const navigate = useNavigate();
+
   return (
     <div>
       <form>
         <label htmlFor="first_name">
           First Name:
-          <input className="form-control"
+          <input
+            className="form-control"
             type="text"
             name="first_name"
             id="first_name"
@@ -23,7 +22,8 @@ function ReservationForm({ formData,
         <br />
         <label htmlFor="last_name">
           Last Name:
-          <input className="form-control"
+          <input
+            className="form-control"
             type="text"
             name="last_name"
             id="last_name"
@@ -35,7 +35,8 @@ function ReservationForm({ formData,
         <br />
         <label htmlFor="mobile_number">
           Mobile Number:
-          <input className="form-control"
+          <input
+            className="form-control"
             type="tel"
             name="mobile_number"
             id="mobile_number"
@@ -47,7 +48,8 @@ function ReservationForm({ formData,
         <br />
         <label htmlFor="reservation_date">
           Reservation Date:
-          <input className="form-control"
+          <input
+            className="form-control"
             type="date"
             placeholder="YYYY-MM-DD"
             pattern="\d{4}-\d{2}-\d{2}"
@@ -61,7 +63,8 @@ function ReservationForm({ formData,
         <br />
         <label htmlFor="reservation_time">
           Reservation Time:
-          <input className="form-control"
+          <input
+            className="form-control"
             type="time"
             placeholder="HH:MM"
             pattern="[0-9]{2}:[0-9]{2}"
@@ -75,7 +78,8 @@ function ReservationForm({ formData,
         <br />
         <label htmlFor="people">
           Party Size:
-          <input className="form-control"
+          <input
+            className="form-control"
             type="number"
             name="people"
             id="people"

@@ -10,7 +10,7 @@ import ListReservations from "./ListReservations";
 import useQuery from "../utils/useQuery";
 import { today } from "../utils/date-time";
 import { previous, next } from "../utils/date-time";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ListTables from "./ListTables";
 import moment from "moment";
 
@@ -21,7 +21,6 @@ import moment from "moment";
  * @returns {JSX.Element}
  */
 function Dashboard() {
-  const navigate = useNavigate();
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   const [tables, setTables] = useState([]);
@@ -52,22 +51,21 @@ function Dashboard() {
 
   //handler for finish button
 
-  async function finishHandler(table_id, reservation_id ) {
-    
+  async function finishHandler(table_id, reservation_id) {
     const abortController = new AbortController();
     const confirmationWindow = window.confirm(
       "Is this table ready to seat new guests? This cannot be undone."
     );
     if (confirmationWindow) {
       try {
-        const updatedData = { status: "finished"};
+        const updatedData = { status: "finished" };
         await finishTable(table_id);
         await changeReservationStatus(
           reservation_id,
           updatedData,
           abortController.signal
         );
-           } catch (error) {
+      } catch (error) {
         setTablesError([error]);
       }
       window.location.reload();
@@ -82,30 +80,29 @@ function Dashboard() {
     );
     if (confirmationWindow) {
       try {
-        const updatedData = { status: "cancelled"};
-      
+        const updatedData = { status: "cancelled" };
+
         await changeReservationStatus(
           reservation_id,
           updatedData,
           abortController.signal
         );
-       
       } catch (error) {
         setCancelError([error]);
       }
-      
-        window.location.reload();
+
+      window.location.reload();
       return () => abortController.abort();
     }
   }
-
-
 
   return (
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for {moment(date).format("dddd, MMM DD, YYYY")}</h4>
+        <h4 className="mb-0">
+          Reservations for {moment(date).format("dddd, MMM DD, YYYY")}
+        </h4>
       </div>
       <div className="container">
         <Link
@@ -131,7 +128,7 @@ function Dashboard() {
         cancelHandler={cancelHandler}
       />
       <br />
-      <ListTables tables={tables}  finishHandler={finishHandler} />
+      <ListTables tables={tables} finishHandler={finishHandler} />
     </main>
   );
 }

@@ -9,7 +9,8 @@ function SearchForm({ changeHandler, formData, submitHandler }) {
       <form>
         <label htmlFor="mobile_number">Mobile Number</label>
         <div>
-          <input className="form-control"
+          <input
+            className="form-control"
             type="text"
             name="mobile_number"
             id="mobile_number"
@@ -21,7 +22,7 @@ function SearchForm({ changeHandler, formData, submitHandler }) {
         </div>
         <br />
         <div>
-        <button
+          <button
             className="btn btn-danger mr-2"
             type="button"
             onClick={() => navigate(`/`)}
@@ -34,7 +35,7 @@ function SearchForm({ changeHandler, formData, submitHandler }) {
             onClick={(event) => submitHandler(event)}
           >
             Find
-          </button> 
+          </button>
         </div>
       </form>
     </>

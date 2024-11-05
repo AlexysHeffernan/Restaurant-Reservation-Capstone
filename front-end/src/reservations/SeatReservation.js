@@ -17,7 +17,9 @@ function SeatReservation() {
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
   const [formData, setFormData] = useState({});
-  const [reservation, setReservation] = useState(location.state?.reservation || null);
+  const [reservation, setReservation] = useState(
+    location.state?.reservation || null
+  );
   const [reservationError, setReservationError] = useState(null);
 
   //Handlers
@@ -35,9 +37,8 @@ function SeatReservation() {
       navigate("/");
     } catch (error) {
       setTablesError(error);
-    } 
+    }
     return () => abortController.abort();
-  
   };
 
   // load tables
@@ -67,7 +68,8 @@ function SeatReservation() {
       <main>
         <h1>Seat Reservation</h1>
         <h3>
-          Reservation ID: {reservation_id} Party Size: {reservation.people || "Loading..."}
+          Reservation ID: {reservation_id} Party Size:{" "}
+          {reservation.people || "Loading..."}
         </h3>
         <div>
           <ErrorAlert error={tablesError} />

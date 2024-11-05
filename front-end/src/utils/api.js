@@ -82,7 +82,7 @@ export async function createReservation(reservation, signal) {
     body: JSON.stringify({ data: reservation }),
     signal,
   };
- return await fetchJson(url, options);
+  return await fetchJson(url, options);
 }
 
 export async function createTable(table, signal) {
@@ -110,7 +110,7 @@ export async function updateTableForSeating(table_id, reservation_id, signal) {
     body: JSON.stringify({ data: { reservation_id } }),
     signal,
   };
-  const data =  await fetchJson(url, options);
+  const data = await fetchJson(url, options);
   return data;
 }
 
@@ -130,11 +130,9 @@ export async function changeReservationStatus(reservation_id, status) {
   const options = {
     method: "PUT",
     headers,
-    body: JSON.stringify({ data: { status} }),
-   
+    body: JSON.stringify({ data: { status } }),
   };
   return await fetchJson(url, options, {});
-  
 }
 
 export async function searchByMobileNumber(mobile_number, signal) {
@@ -153,5 +151,4 @@ export async function updateReservation(reservation_id, data, signal) {
     signal,
   };
   return await fetchJson(url, options, {});
-  
 }

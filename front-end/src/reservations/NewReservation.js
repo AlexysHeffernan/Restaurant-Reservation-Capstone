@@ -6,7 +6,6 @@ import ErrorAlert from "../layout/ErrorAlert";
 
 function NewReservation() {
   const navigate = useNavigate();
- 
 
   const initialFormState = {
     first_name: "",
@@ -32,9 +31,8 @@ function NewReservation() {
     event.preventDefault();
     const abortController = new AbortController();
     try {
-      await createReservation(formData, abortController.signal)
+      await createReservation(formData, abortController.signal);
       navigate(`/dashboard`);
-
     } catch (error) {
       setErrorAlert(error);
     }
@@ -46,13 +44,12 @@ function NewReservation() {
         <h1>New Reservation</h1>
       </div>
       <div>
-       
         <ReservationForm
           formData={formData}
           changeHandler={changeHandler}
           submitHandler={submitHandler}
         />
-         <ErrorAlert error={errorAlert} />
+        <ErrorAlert error={errorAlert} />
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
@@ -18,30 +17,32 @@ import EditReservation from "../reservations/EditReservation";
  * @returns {JSX.Element}
  */
 function RootRoutes() {
- 
   return (
-    
-      <Routes>
-      <Route path="/" element={<Dashboard date={today()}/>} />
-      
-      <Route exact path="/reservations/new" element={<NewReservation />} />
-     
-      <Route path="/reservations" element={<Dashboard date={today()}/>} />
-     
-      <Route path="/reservations/:reservation_id/seat" element={<SeatReservation />} />
-    
-      <Route path="/reservations/:reservation_id/edit" element={<EditReservation />} />
-     
-      <Route path="/dashboard" element={<Dashboard date={today()} />} />
-     
-      <Route path="/tables/new" element={<NewTable />} />
-      
-      <Route path="/search" element={<Search />} />
-     
-      <Route path="*" element={<NotFound />} />
+    <Routes>
+      <Route path="/" element={<Dashboard date={today()} />} />
 
-      </Routes>
-   
+      <Route exact path="/reservations/new" element={<NewReservation />} />
+
+      <Route path="/reservations" element={<Dashboard date={today()} />} />
+
+      <Route
+        path="/reservations/:reservation_id/seat"
+        element={<SeatReservation />}
+      />
+
+      <Route
+        path="/reservations/:reservation_id/edit"
+        element={<EditReservation />}
+      />
+
+      <Route path="/dashboard" element={<Dashboard date={today()} />} />
+
+      <Route path="/tables/new" element={<NewTable />} />
+
+      <Route path="/search" element={<Search />} />
+
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 

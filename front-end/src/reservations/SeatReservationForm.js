@@ -21,7 +21,7 @@ function SeatReservationForm({ tables, submitHandler, changeHandler }) {
           ))}
         </select>
         <div>
-        <button
+          <button
             className="btn btn-danger mr-2"
             type="button"
             onClick={() => navigate(-1)}

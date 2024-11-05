@@ -1,6 +1,7 @@
 body {
   font-family: "Lato", sans-serif;
   background-color: #fdfcfa;
+  font-size: 13px;
 }
 
 .side-bar {
@@ -8,8 +9,6 @@ body {
   min-width: 200px;
 }
 
-th {
- 
-
-  vertical-align: top;
+th td {
+   vertical-align: center;
 }

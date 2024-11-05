@@ -148,8 +148,8 @@ function isBooked(req, res, next) {
 async function reservationExists(req, res, next) {
   const reservation_id = req.params.reservationId;
 
-  if (!reservation_id){
-    return next({status: 400, message: "reservation_id is required" })
+  if (!reservation_id) {
+    return next({ status: 400, message: "reservation_id is required" });
   }
   const reservation = await reservationsService.read(reservation_id);
   if (reservation) {
@@ -168,7 +168,7 @@ async function reservationExists(req, res, next) {
 async function list(req, res) {
   const { date, mobile_number } = req.query;
 
-   let data;
+  let data;
 
   if (date) {
     data = await reservationsService.list(date);
@@ -183,7 +183,7 @@ async function list(req, res) {
 
 async function read(req, res) {
   const { reservation } = res.locals;
-  res.json({ data: {...reservation }});
+  res.json({ data: { ...reservation } });
 }
 
 async function create(req, res) {

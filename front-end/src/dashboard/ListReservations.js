@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import { readReservation, updateReservation, changeReservationStatus } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
+import React from "react";
+import { Link } from "react-router-dom";
+import { changeReservationStatus } from "../utils/api";
 
 function ListReservations({ reservations, date }) {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [reservationError, setReservationError] = useState(null);
-  const [formData, setFormData] = useState({ });
-  const [errorAlert, setErrorAlert] = useState(null);
-
- 
   const displayReservations = reservations.map((reservation, index) => {
     if (
-      reservation.reservation_date === date && 
+      reservation.reservation_date === date &&
       reservation.status !== "finished" &&
       reservation.status !== "cancelled"
     ) {
       const cancelHandler = () => {
-        if( window.confirm("Do you want to cancel this reservation?\n This cannot be undone.")){
-          changeReservationStatus(reservation.reservation_id, "cancelled")
-          .then((res)=> window.location.reload() )
-      }
-      }
-    
+        if (
+          window.confirm(
+            "Do you want to cancel this reservation?\n This cannot be undone."
+          )
+        ) {
+          changeReservationStatus(reservation.reservation_id, "cancelled").then(
+            (res) => window.location.reload()
+          );
+        }
+      };
+
       return (
         <tr key={index} className="res-text table-row">
           <td>{reservation.reservation_id}</td>
@@ -41,19 +38,24 @@ function ListReservations({ reservations, date }) {
           <td>
             {reservation.status !== "booked" ? null : (
               <>
-                
-                <Link to={`/reservations/${reservation.reservation_id}/seat`} state={{ reservation }} className="btn btn-primary mx-1" >
-                    Seat
+                <Link
+                  to={`/reservations/${reservation.reservation_id}/seat`}
+                  state={{ reservation }}
+                  className="btn btn-primary mx-1"
+                >
+                  Seat
                 </Link>
-                
 
-                <Link to ={`/reservations/${reservation.reservation_id}/edit`} className="btn btn-secondary mx-1" >
+                <Link
+                  to={`/reservations/${reservation.reservation_id}/edit`}
+                  className="btn btn-secondary mx-1"
+                >
                   Edit
                 </Link>
-                
+
                 <button
                   data-reservation-id-cancel={reservation.reservation_id}
-                  className="btn btn-danger mx-5 mt-2"
+                  className="btn btn-danger mx-1"
                   state={{ reservation }}
                   type="button"
                   onClick={() => cancelHandler(reservation.reservation_id)}
@@ -65,7 +67,7 @@ function ListReservations({ reservations, date }) {
           </td>
         </tr>
       );
-    } 
+    }
     return null;
   });
 
