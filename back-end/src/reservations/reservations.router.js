@@ -14,7 +14,7 @@ router.route("/")
 .all(methodNotAllowed);
 
 router.route("/:reservationId")
-.get(controller.list)
+.get(controller.read)
 .put(controller.update)
 .all(methodNotAllowed);
 

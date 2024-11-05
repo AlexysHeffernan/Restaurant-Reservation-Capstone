@@ -146,9 +146,11 @@ function isBooked(req, res, next) {
 }
 
 async function reservationExists(req, res, next) {
-  const reservation_id =
-    req.params.reservation_id || req.body.data?.reservation_id;
+  const reservation_id = req.params.reservationId;
 
+  if (!reservation_id){
+    return next({status: 400, message: "reservation_id is required" })
+  }
   const reservation = await reservationsService.read(reservation_id);
   if (reservation) {
     res.locals.reservation = reservation;

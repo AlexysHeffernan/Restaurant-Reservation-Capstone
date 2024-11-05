@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
 import { searchByMobileNumber } from "../utils/api";
 import SearchForm from "./SearchForm";
-import ListReservations from "../dashboard/ListReservations";
+import ListSearchResults from "./ListSearchResults";
 
 function Search() {
   //inital form
@@ -55,7 +55,7 @@ function Search() {
         {searchError.length > 0 && <ErrorAlert error={searchError} />}
 
         {reservations.length > 0 && (
-          <ListReservations reservations={reservations} />
+          <ListSearchResults reservations={reservations} />
         )}
 
         {submitted &&

@@ -60,10 +60,14 @@ function Dashboard() {
     );
     if (confirmationWindow) {
       try {
+        const updatedData = { status: "finished"};
         await finishTable(table_id);
-        //await changeReservationStatus(reservation_id, "finished");
-        
-      } catch (error) {
+        await changeReservationStatus(
+          reservation_id,
+          updatedData,
+          abortController.signal
+        );
+           } catch (error) {
         setTablesError([error]);
       }
       window.location.reload();
@@ -78,14 +82,24 @@ function Dashboard() {
     );
     if (confirmationWindow) {
       try {
-        await changeReservationStatus(reservation_id, "cancelled");
+        const updatedData = { status: "cancelled"};
+      
+        await changeReservationStatus(
+          reservation_id,
+          updatedData,
+          abortController.signal
+        );
+       
       } catch (error) {
         setCancelError([error]);
       }
-      window.location.reload();
+      
+        window.location.reload();
       return () => abortController.abort();
     }
   }
+
+
 
   return (
     <main>

@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import { readReservation, updateReservation, changeReservationStatus } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
+import React, { useState } from "react";
+import { Link } from "react-router-dom"
+import { changeReservationStatus } from "../utils/api";
 
-function ListReservations({ reservations, date }) {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [reservationError, setReservationError] = useState(null);
-  const [formData, setFormData] = useState({ });
-  const [errorAlert, setErrorAlert] = useState(null);
 
+function ListSearchResults({ reservations }) {
  
   const displayReservations = reservations.map((reservation, index) => {
     if (
-      reservation.reservation_date === date && 
       reservation.status !== "finished" &&
       reservation.status !== "cancelled"
     ) {
@@ -93,4 +86,4 @@ function ListReservations({ reservations, date }) {
   );
 }
 
-export default ListReservations;
+export default ListSearchResults;

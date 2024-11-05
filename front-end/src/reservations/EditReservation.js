@@ -38,7 +38,7 @@ function EditReservation() {
           mobile_number: data.mobile_number,
           reservation_date: data.reservation_date,
           reservation_time: data.reservation_time,
-          people: data.people,
+          people: Number(data.people),
           status: data.status,
         })
       )
@@ -61,14 +61,16 @@ function EditReservation() {
     setErrorAlert(null);
     const abortController = new AbortController();
     try {
-      const response = await updateReservation(
+
+      const updatedData = { ...formData, people: Number(formData.people)};
+      
+      await updateReservation(
         reservation_id,
-        formData,
+        updatedData,
         abortController.signal
       );
-      navigate(
-        `/dashboard/?date=${response.reservation_date}`
-      );
+      navigate("/");
+      window.location.reload();
     } catch (error) {
       setErrorAlert(error);
     }
