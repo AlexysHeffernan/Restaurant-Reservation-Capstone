@@ -54,7 +54,7 @@ function ListSearchResults({ reservations }) {
 
                 <button
                   data-reservation-id-cancel={reservation.reservation_id}
-                  className="btn btn-danger mx-5 mt-2"
+                  className="btn btn-danger mx-1"
                   state={{ reservation }}
                   type="button"
                   onClick={() => cancelHandler(reservation.reservation_id)}
