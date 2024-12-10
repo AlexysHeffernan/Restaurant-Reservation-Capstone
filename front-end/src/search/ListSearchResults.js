@@ -30,7 +30,7 @@ function ListSearchResults({ reservations }) {
           <td>{reservation.reservation_time}</td>
           <td>{reservation.people}</td>
           <td>
-            <p className="mt-1"data-reservation-id-status={reservation.reservation_id}>
+            <p className="mt-2"data-reservation-id-status={reservation.reservation_id}>
               {reservation.status}
             </p>
           </td>
