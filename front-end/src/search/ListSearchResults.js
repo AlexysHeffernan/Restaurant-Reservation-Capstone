@@ -30,7 +30,7 @@ function ListSearchResults({ reservations }) {
           <td>{reservation.reservation_time}</td>
           <td>{reservation.people}</td>
           <td>
-            <p data-reservation-id-status={reservation.reservation_id}>
+            <p className="mt-1"data-reservation-id-status={reservation.reservation_id}>
               {reservation.status}
             </p>
           </td>
@@ -40,21 +40,21 @@ function ListSearchResults({ reservations }) {
                 <Link
                   to={`/reservations/${reservation.reservation_id}/seat`}
                   state={{ reservation }}
-                  className="btn btn-primary mx-1 m-1"
+                  className="btn btn-primary m-1"
                 >
                   Seat
                 </Link>
 
                 <Link
                   to={`/reservations/${reservation.reservation_id}/edit`}
-                  className="btn btn-secondary mx-1 m-1"
+                  className="btn btn-secondary m-1"
                 >
                   Edit
                 </Link>
 
                 <button
                   data-reservation-id-cancel={reservation.reservation_id}
-                  className="btn btn-danger mx-1 m-1"
+                  className="btn btn-danger m-1"
                   state={{ reservation }}
                   type="button"
                   onClick={() => cancelHandler(reservation.reservation_id)}
