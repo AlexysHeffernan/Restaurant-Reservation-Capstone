@@ -87,7 +87,7 @@ function ListSearchResults({ reservations }) {
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody className="mt-2">{displayReservations}</tbody>
+          <tbody>{displayReservations}</tbody>
         </table>
       </div>
     </div>
