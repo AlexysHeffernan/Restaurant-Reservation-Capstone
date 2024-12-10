@@ -23,14 +23,14 @@ function SearchForm({ changeHandler, formData, submitHandler }) {
         <br />
         <div>
           <button
-            className="btn btn-danger mr-2 mb-5"
+            className="btn btn-danger mr-2 mb-3"
             type="button"
             onClick={() => navigate(`/`)}
           >
             Cancel
           </button>
           <button
-            className="btn btn-primary mb-5"
+            className="btn btn-primary mb-3"
             type="submit"
             onClick={(event) => submitHandler(event)}
           >
